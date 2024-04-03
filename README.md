@@ -1,10 +1,10 @@
-AVISO IMPORTANTE GUIA 1
+##   AVISO IMPORTANTE GUIA 1
 LAS FUNCIONES ARMADAS POR LA CATEDRA NUMTOSTR Y PRINT ESTAN MAL HECHAS!!! MODIFICAN EBP!!!
 En mi lib/lib.asm, las tengo corregidas por medio de una funcion wrapper. Chequealo.
 
 
 
-!!!!!!!! MAQUINA VIRTUAL PARA MACS CON APPLE SILICON !!!!!!!!
+#   !!!!!!!! MAQUINA VIRTUAL PARA MACS CON APPLE SILICON !!!!!!!!
 La manera mas facil de hacer esta materia si tenes mac con m1 m2 o m3. 
 
 1. Instala UTM: https://mac.getutm.app/
@@ -18,8 +18,7 @@ No se por que, pero muchas veces es necesario ejecutar los comandos con sudo (Cu
 El user y contraseña son ambos "tomas".
    
 
-
-NOTAS GUIA 1:
+#   NOTAS GUIA 1:
 Los primeros ejercicios los hice mientras aprendia o sea que pueden estar medio raros.
 Si en algun ejercicio usa funciones declaradas como EXTERN, hay que linkeditar con lib/lib.asm
 
