@@ -1,0 +1,3 @@
+Viendo el archivo con bless, vemos las siguientes lineas:
+Ingrese la Contrasena:.%s. SUCUTRULE. COntrasena Correcta. Contrasena Incorrecta.
+Se aprecia que primero estan los 2 argumentos del scanf, "Ingrese la contrasena" y "%s" (para formatear la string). Seguidos de la contrasena en cuestion, y los mensajes que se imprimen. Supongo que si haces el obj dump, la posicion relativa entre estos argumentos tiene sentido.
