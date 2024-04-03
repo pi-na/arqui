@@ -1,8 +1,8 @@
-#AVISO IMPORTANTE GUIA 1
+AVISO IMPORTANTE GUIA 1
 LAS FUNCIONES ARMADAS POR LA CATEDRA NUMTOSTR Y PRINT ESTAN MAL HECHAS!!! MODIFICAN EBP!!!
 En mi lib/lib.asm, las tengo corregidas por medio de una funcion wrapper. Chequealo.
 
-#NOTAS GUIA 1:
+NOTAS GUIA 1:
 Los primeros ejercicios los hice mientras aprendia o sea que pueden estar medio raros.
 Si en algun ejercicio usa funciones declaradas como EXTERN, hay que linkeditar con lib/lib.asm
 
