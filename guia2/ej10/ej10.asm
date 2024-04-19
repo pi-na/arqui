@@ -17,7 +17,7 @@ mov ecx, 4
 .ciclo
     add ecx, 4              ;   En la primer iteracion ya arranco por el 1er argumento
     mov eax, ebp
-    add eax, ecx
+    add eax, ecx            
     mov eax, dword[eax]
     test eax, eax
     jz .exit                ;   Si lei NULL me voy
