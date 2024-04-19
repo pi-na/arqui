@@ -18,7 +18,7 @@ fmt4 db "ecx = %d", 10, 0
 section .text
 main:
     push ebp ;Armado de stack frame 
-    mov ebp, esp ;
+    mov ebp, esp 
 
     ;====================================
     ;imprime argc, cantidad de argumentos
