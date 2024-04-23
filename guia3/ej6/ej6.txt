@@ -1,0 +1,77 @@
+Enumere las diferencias de declarar las vairables y utilizarlas de las sig formas:
+
+1. ================================================================
+
+int foo(){
+    int numero;
+}
+
+De esta manera, se esta reservando memoria en el stack (add ESP, 4 supongo).
+No se esta asignando nada en este espacio de memoria.
+
+
+2. ================================================================
+
+int foo(){
+        int numero = 21;
+    }
+
+En primer lugar, se reservan 4 bytes en el stack. Luego, se guarda el numero 21 en el espacio reservado.
+
+3. ================================================================
+
+int numero;
+int foo(){
+        numero = 21;
+    }
+
+Se reservan 4 bytes en el stack. Estos 4 bytes no estan en el scope de la funcion foo(), si no
+que son alcanzables por todo el programa. Luego, dentro de foo se escribe 21 en dicho espacio.
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Corrección: Incorrecto. La variable numero es una variable global y no se reserva en el stack
+de la función foo, sino en el área de datos global del programa. Por lo tanto, es accesible
+desde cualquier parte del programa y su vida útil es la duración completa del programa, 
+no solo el alcance de foo.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+4. ================================================================
+
+int foo(){
+        static int numero = 21;
+    }
+
+Se reservan 4 bytes en el stack, fuera del scope de foo(). Luego se asigna 21.
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Incorrecto. La variable numero es estática dentro de la función, lo que significa
+que no se almacena en el stack, sino en el área de datos estáticos del programa,
+similar a una variable global pero con el alcance limitado al de la función foo. 
+Se inicializa con 21 la primera vez que se invoca foo y mantiene su valor entre
+llamadas a la función.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+5. ================================================================
+
+extern int numero;
+int foo(){
+        numero = 10;
+    }
+
+Se apunta 'numero' a un espacio de memoria que se espera este reservado por OTRO archivo de programa.
+Esto indica que 'numero' debe ser definida en otro lugar en el enlace (linkeditor) del programa.
+Luego, se intenta escribir 10 en dicho espacio.
+
+6. ================================================================
+
+static int numero = 10;
+int foo(){
+        numero = 20;
+    }
+
+Esta declaración establece numero como una variable estática global (si está fuera
+de cualquier función, lo que parece ser el caso desde la falta de especificación de
+ubicación). Esto significa que numero es inicializada con 10 al comenzar el programa
+y luego puede ser modificada por llamadas a foo, donde se le asigna 20. numero tiene 
+duración de programa completo y visibilidad limitada al archivo fuente, a menos que sea
+accesible a través de funciones o mediante otros mecanismos.
