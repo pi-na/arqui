@@ -47,6 +47,9 @@ fibo:
     ret
 
 ========    output real en ASM   ========
+
+;   OJO TAMBIEN VER fibonacci.s para realizar el seguimiento de stack
+
 fibo:
 ;=========================
 ;   Armado de stack frame
@@ -74,14 +77,18 @@ fibo:
 	add	eax, OFFSET FLAT:_GLOBAL_OFFSET_TABLE_
 	.loc 1 12 7
 	cmp	DWORD PTR 8[ebp], 0
-	je	.L4
+	je	.L4                 ;   Si era 0 salta a .L4
 	.loc 1 12 15 discriminator 2
 	cmp	DWORD PTR 8[ebp], 1
-	jne	.L5                 ;   >>>> Si no era 0 o 1 salta a .L5 con el cuerpo de la funcion
+	jne	.L5                 ;   Si NO era 0 ni 1, salta a .L5
+                            ;   Si era 1 SIGUE LEYENDO ('salta' a .L4)
 .L4:
 	.loc 1 12 33 discriminator 3
-	mov	eax, DWORD PTR 8[ebp]
-	jmp	.L6
+	mov	eax, DWORD PTR 8[ebp]   ;   Carga el argumento N en EAX (que es cero o uno)
+	jmp	.L6                     ;   RETURN
+
+
+;   >>>> Si no era 0 o 1 salta a .L5 q contiene el [[paso recursivo]]
 ;==========================================================
 ;   Llamados recursivos
 ;==========================================================
@@ -102,7 +109,7 @@ fibo:
 	call	fibo                ;   LLAMADO RECURSIVO fibo(N-2)
 	add	esp, 16                 ;   Descarta 16 bytes del stack (los 12 bytes que reservo + el dato (N - 1) que pusheo recien)
 	.loc 1 13 24
-	add	eax, ebx                ;   !!! SUMA EAX = fibo(N - 2) CON EBX = fibo(N - 1) ADIVINE !!!
+	add	eax, ebx                ;   !!! SUMA EAX = fibo(N - 2) CON EBX = fibo(N - 1); ADIVINE !!!
 ;==========================================================
 ;   Desarmado de stack frame y RETURN
 ;==========================================================

@@ -9,14 +9,27 @@
 	.text
 	.globl	main
 	.type	main, @function
+
+;=========================
+;   ESP     |   RET SO
+;   ESP + 4 |   argc
+;   ESP + 8 |   argv[]
+;   ESP + 12 |   env_var[]
+;=========================
+
+;   SEA EXX un registro dado, [EXX - 4] = -4[EXX]
+;   [EXX + 4] es equivalente a 4[EXX]
+;   Agarra la direccion en el registro EXX, le suma 4 y luego desreferencia todo eso!
+
 main:
 .LFB0:
 	.file 1 "fibonacci.c"
 	.loc 1 5 11
-	lea	ecx, 4[esp]
+	lea	ecx, 4[esp]           ; ECX = ESP + 4 = puntero a argc 
+                              ; RECORDAR QUE LEA CARGA LA DIRECCION NO LOS CONTENIDOS!
 .LCFI0:
 	and	esp, -16
-	push	DWORD PTR -4[ecx]
+	push	DWORD PTR -4[ecx] ; pushea lo que hay encima de argc ??? supongo que es la dir de retorno del SO
 	push	ebp
 	mov	ebp, esp
 .LCFI1:

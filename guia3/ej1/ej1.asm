@@ -3,8 +3,8 @@ GLOBAL main
 EXTERN printf
 EXTERN puts
 
-;   EBP             |   EBP contexto anterior
 ;   EBP + 4         |   RET contexto anterior
+;   EBP             |   EBP contexto anterior
 ;   EBP + 8         |   argc
 ;   EBP + 12        |   puntero a argv[]
 ;   EBP + (n+1)*4   |   puntero variables_entorno[]
