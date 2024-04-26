@@ -15,8 +15,7 @@ O_CREAT: Crea el archivo si no existe.
 O_TRUNC: Si el archivo ya existe y es un archivo regular, trúncalo a longitud cero
  * */
 
-static char* hello = "Hola, como te llamas?\n";
-static char* user_msg = " no sabe programar!!\n";
+static char* hello = "Hola, como te llamas?\n"; static char* user_msg = " no sabe programar!!\n";
 static char* file_open_msg = "================ Leyendo archivo:\n";
 static char* file_close_msg = "================ Fin del archivo:\n";
 static char* exit_msg = "Saliendo con codigo de error 200 - (echo $? para verificarlo)\n";

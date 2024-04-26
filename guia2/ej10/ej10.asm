@@ -10,6 +10,7 @@ section .bss
 my_string_memory resb 100
 
 section .text
+
 _start:
 mov ebp, esp
 
