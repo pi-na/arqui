@@ -1,35 +1,38 @@
-Si hacemos un objdump -d -M intel del archivo password_ofuscated, podemos ver el codigo fuente del programa. En particular, nos interesa la funcion fillpassword.
-Se aprecia que la funcion va escribiendo uno por uno los caracteres para formar "S0RPR3S4" en el stack en la posicion EBP+0x8.
-Supongo que el stack se ve MAS O MENOS asi: (habria que hacer bien el seguimiento)
+Si hacemos un objdump -d -M intel del archivo password_ofuscated, podemos ver el codigo fuente del programa. 
+En particular, nos interesa la funcion fillpassword.
+Se aprecia que la funcion va escribiendo uno por uno los caracteres para formar "S0RPR3S4" 
+en una zona de memoria para la cual recibe un puntero desde EBP + 8.
+
+Supongo que el stack se ve asi: 
 
                     0x000000
-------------------
-| DIR RETORNO     | <--- EBP
--------------------
-| ALGUN ARGUMENTO |
--------------------
-| ALGUN ARGUMENTO |
--------------------
-| "S0RP"          | <--- EBP+0x8
--------------------
-| "RES4\0"        |
--------------------
+----------------------
+| EBP ANTERIOR       | <--- EBP fillpassword
+----------------------
+| DIR RETORNO        | 
+----------------------
+| Puntero a password | <--- EBP+0x8
+----------------------
                     0xfffffff
 
 
 RECORDAR: Incrementar el STACK POINTER se traduce en ir a una posicion MAS BAJA del stack
 
-
-Para modificar la contrasena a 1234, debemos buscar en el bless hex editor las lineas que cargan los caracteres, y reemplazarlos por 1234\0. Recordar que \0 es 00 en hexa.
+Para modificar la contrasena a 1234, debemos buscar en el bless hex editor 
+las lineas que cargan los chars, y reemplazarlos por 1234\0. 
+Recordar que \0 es 00 en hexa.
 
 080484cb <fillpassword>:
  80484cb:	55                   	push   ebp
  80484cc:	89 e5                	mov    ebp,esp
- 80484ce:	8b 45 08             	mov    eax,DWORD PTR [ebp+0x8]
- 80484d1:	c6 00 53             	mov    BYTE PTR [eax],0x53
- 80484d4:	8b 45 08             	mov    eax,DWORD PTR [ebp+0x8]
- 80484d7:	83 c0 01             	add    eax,0x1
- 80484da:	c6 00 30             	mov    BYTE PTR [eax],0x30
+ 80484ce:	8b 45 08             	mov    eax,DWORD PTR [ebp+0x8]      ;   Carga el puntero a la zona 
+                                                                        ;   de memoria de password en eax
+ 80484d1:	c6 00 53             	mov    BYTE PTR [eax],0x53          ;   Carga 0x53 EN LA ZONA DE MEMORIA
+                                                                        ;   apuntada por EAX (por eso usa corchetes de nuevo)
+
+ 80484d4:	8b 45 08             	mov    eax,DWORD PTR [ebp+0x8]      ;   Carga el puntero a la memoria de passwd
+ 80484d7:	83 c0 01             	add    eax,0x1                      ;   Apunta a la segunda posicion en la password
+ 80484da:	c6 00 30             	mov    BYTE PTR [eax],0x30          ;   Carga 0x30 en la segunda posicion
  80484dd:	8b 45 08             	mov    eax,DWORD PTR [ebp+0x8]
  80484e0:	83 c0 02             	add    eax,0x2
  80484e3:	c6 00 52             	mov    BYTE PTR [eax],0x52
