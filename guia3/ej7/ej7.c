@@ -8,6 +8,10 @@
  De manera global inicializando.
 */
 
+//JAVI:
+//en conclusion se puede notar que los arreglos inicializados ocupan 
+//menos memoria que los que no se inicializan. Eso es por el alineamiento.
+//Como si se inicializan se recorre todo. Si no, no se sabe si estan alineados o no.
 
 //De manera global, sin inicializar
 int array5[1];
