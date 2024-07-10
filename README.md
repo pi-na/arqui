@@ -5,10 +5,10 @@ En mi lib/lib.asm, las tengo corregidas por medio de una funcion wrapper. Cheque
 
 
 #   !!!!!!!! MAQUINA VIRTUAL PARA MACS CON APPLE SILICON !!!!!!!!
-La manera mas facil de hacer esta materia si tenes mac con m1 m2 o m3. 
+Sirve para usar nasm, gcc, edb, gdb, correr los programas y para el TPE.
 
 1. Instala UTM: https://mac.getutm.app/
-2. Descarga la imagen ya preparada para arqui:  TODO PONER EL LINK DE DRIVE
+2. Descarga la imagen ya preparada para arqui:  [TODO PONER EL LINK DE DRIVE]
 3. Selecciona la opcion nueva virtual machine -> open... -> elegi la imagen .utm -- Ahora estas EMULANDO un procesador intel, corriendo un linux con todas las dependencias necesarias
 4. En el inicio de UTM, elegi la maquina virtual que acabas de crear, baja hasta shared space, y elegi la carpeta que quieras compartir entre macos y tu linux
 5. Inicia la maquina virtual, abri una terminal, hace cd al Desktop y corre el comando ./set_shared_space.sh -- Tenes que hacer esto cada vez que apagues la maquina (podes evitar apagarla cerrando sesion desde el menu de apagar y luego cerrando la ventana, o tocando el boton de pausa desde UTM y dejando UTM abierto)
