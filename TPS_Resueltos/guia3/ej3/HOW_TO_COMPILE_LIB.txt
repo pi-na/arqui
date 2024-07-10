@@ -1,0 +1,24 @@
+Crear una Biblioteca Estática
+Compilar el archivo de ensamblador: Primero, necesitas asegurarte de que tu archivo de ensamblador sys_write.asm se compile correctamente. Utiliza nasm para esto, asegurándote de que produces un archivo objeto en el formato adecuado para enlazarse luego con código C:
+bash
+Copy code
+nasm -f elf32 sys_write.asm -o sys_write.o
+Compilar el archivo C sin enlazar: Luego, compila tu archivo C (puts.c) en un objeto sin intentar enlazarlo (usando la opción -c con GCC). Esto evita que GCC busque la función main:
+bash
+Copy code
+gcc -m32 -fno-builtin -c puts.c -o puts.o
+Crear la biblioteca estática: Finalmente, puedes crear una biblioteca estática usando ar para archivar los archivos objeto:
+bash
+Copy code
+ar rcs libputs.a puts.o sys_write.o
+Esto crea un archivo libputs.a, que es una biblioteca estática que contiene tus funciones.
+Usar la Biblioteca en Otro Programa
+Cuando quieras usar las funciones de tu biblioteca en otro programa que tenga una función main, simplemente compila ese programa y enlázalo con tu biblioteca:
+
+bash
+Copy code
+gcc -m32 main.c -L. -lputs -o main
+En este comando:
+
+-L. le dice al compilador que busque bibliotecas en el directorio actual.
+-lputs le dice al enlazador que use la biblioteca libputs.a (el prefijo lib y la extensión .a son asumidos automáticamente).

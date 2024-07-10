@@ -1,0 +1,60 @@
+Si hacemos un objdump -d -M intel del archivo password_ofuscated, podemos ver el codigo fuente del programa. 
+En particular, nos interesa la funcion fillpassword.
+Se aprecia que la funcion va escribiendo uno por uno los caracteres para formar "S0RPR3S4" 
+en una zona de memoria para la cual recibe un puntero desde EBP + 8.
+
+Supongo que el stack se ve asi: 
+
+                    0x000000
+----------------------
+| EBP ANTERIOR       | <--- EBP fillpassword
+----------------------
+| DIR RETORNO        | 
+----------------------
+| Puntero a password | <--- EBP+0x8
+----------------------
+                    0xfffffff
+
+
+RECORDAR: Incrementar el STACK POINTER se traduce en ir a una posicion MAS BAJA del stack
+
+Para modificar la contrasena a 1234, debemos buscar en el bless hex editor 
+las lineas que cargan los chars, y reemplazarlos por 1234\0. 
+Recordar que \0 es 00 en hexa.
+
+080484cb <fillpassword>:
+ 80484cb:	55                   	push   ebp
+ 80484cc:	89 e5                	mov    ebp,esp
+ 80484ce:	8b 45 08             	mov    eax,DWORD PTR [ebp+0x8]      ;   Carga el puntero a la zona 
+                                                                        ;   de memoria de password en eax
+ 80484d1:	c6 00 53             	mov    BYTE PTR [eax],0x53          ;   Carga 0x53 EN LA ZONA DE MEMORIA
+                                                                        ;   apuntada por EAX (por eso usa corchetes de nuevo)
+
+ 80484d4:	8b 45 08             	mov    eax,DWORD PTR [ebp+0x8]      ;   Carga el puntero a la memoria de passwd
+ 80484d7:	83 c0 01             	add    eax,0x1                      ;   Apunta a la segunda posicion en la password
+ 80484da:	c6 00 30             	mov    BYTE PTR [eax],0x30          ;   Carga 0x30 en la segunda posicion
+ 80484dd:	8b 45 08             	mov    eax,DWORD PTR [ebp+0x8]
+ 80484e0:	83 c0 02             	add    eax,0x2
+ 80484e3:	c6 00 52             	mov    BYTE PTR [eax],0x52
+ 80484e6:	8b 45 08             	mov    eax,DWORD PTR [ebp+0x8]
+ 80484e9:	83 c0 03             	add    eax,0x3
+ 80484ec:	c6 00 50             	mov    BYTE PTR [eax],0x50
+ 80484ef:	8b 45 08             	mov    eax,DWORD PTR [ebp+0x8]
+ 80484f2:	83 c0 04             	add    eax,0x4
+ 80484f5:	c6 00 52             	mov    BYTE PTR [eax],0x52
+ 80484f8:	8b 45 08             	mov    eax,DWORD PTR [ebp+0x8]
+ 80484fb:	83 c0 05             	add    eax,0x5
+ 80484fe:	c6 00 33             	mov    BYTE PTR [eax],0x33
+ 8048501:	8b 45 08             	mov    eax,DWORD PTR [ebp+0x8]
+ 8048504:	83 c0 06             	add    eax,0x6
+ 8048507:	c6 00 53             	mov    BYTE PTR [eax],0x53
+ 804850a:	8b 45 08             	mov    eax,DWORD PTR [ebp+0x8]
+ 804850d:	83 c0 07             	add    eax,0x7
+ 8048510:	c6 00 34             	mov    BYTE PTR [eax],0x34
+ 8048513:	8b 45 08             	mov    eax,DWORD PTR [ebp+0x8]
+ 8048516:	83 c0 08             	add    eax,0x8
+ 8048519:	c6 00 00             	mov    BYTE PTR [eax],0x0
+ 804851c:	90                   	nop
+ 804851d:	5d                   	pop    ebp
+ 804851e:	c3                   	ret    
+

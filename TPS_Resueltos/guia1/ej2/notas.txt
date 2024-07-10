@@ -1,0 +1,2 @@
+Para cortar la string, agregue un 00 donde queria cortarla. 00,  el ASCII para '/0' es el NULL de las strings de C. Entonces, cuando el printf encuentra el 00, deja de leer la string y para de imprimir ahi! Ni necesite borrar la string. No podia borrar la string entera pq si de repente ocupa mas o menos bytes el binario, da segfault!
+
